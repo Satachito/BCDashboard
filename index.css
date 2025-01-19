@@ -9,11 +9,13 @@ body {
 header {
 ;	border-bottom			: 1px solid black
 ;	grid-column				: 1 / 4
+;	padding					: 8px
 }
 
 footer {
 ;	border-top				: 1px solid black
 ;	grid-column				: 1 / 4
+;	padding					: 8px
 }
 
 nav {
