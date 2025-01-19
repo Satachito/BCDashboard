@@ -1,0 +1,23 @@
+{
+  "name": "eqs-mod",
+  "version": "1.0.0",
+  "description": "An Electron boilerplate",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/Satachito/electron-quick-start-MOD",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo",
+    "boilerplate"
+  ],
+  "author": "Satoru Ogura",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^34.0.0"
+  }
+}
