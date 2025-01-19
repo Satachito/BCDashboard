@@ -28,3 +28,5 @@ console.log( 'onMenu', $ )
 )
 
 onbeforeunload = ev => ev.preventDefault()
+
+SURVEY_B.onclick = () => main.send( 'SURVEY' )
