@@ -29,4 +29,6 @@ console.log( 'onMenu', $ )
 
 onbeforeunload = ev => ev.preventDefault()
 
-SURVEY_B.onclick = () => main.send( 'SURVEY' )
+DEPLOY_B.onclick = () => main.send( 'DEPLOY', 'SimpleStorage', TextArea.value )
+
+

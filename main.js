@@ -248,62 +248,44 @@ app.whenReady().then(
 		const $ = process.argv.slice( process.defaultApp ? 2 : 1 )
 		$.length
 		?	$.forEach( _ => CreateWindow( _ ) )
-		:	Message(
-				{	message	: 'electron-quick-start-MOD'
-				,	buttons	: [ 'Create New', 'Open Dialog' ]
-				}
-			)
-			?	Open()
-			:	CreateWindow()
-		;
+		:	CreateWindow()
 	}
 )
 
 const
 ethers = require( 'ethers' )
-console.log( ethers )
 
-//const provider = new ethers.JsonRpcProvider(
-//	'https://eth-sepolia.g.alchemy.com/v2/' + process.env.ALCHEMY_API_KEY
-//)
-
-
-const
-provider = new ethers.AlchemyProvider(
-	'sepolia'
-,	process.env.ALCHEMY_API_KEY
+const wallet = new ethers.Wallet(
+	process.env.WALLET_PRIVATE_KEY
+,	new ethers.AlchemyProvider(
+		'sepolia'
+	,	process.env.ALCHEMY_API_KEY
+	)
 )
 
-const wallet = new ethers.Wallet( process.env.WALLET_PRIVATE_KEY, provider )
-console.log(`Wallet Address: ${wallet.address}`);
-console.log(`Provider: ${wallet.provider ? 'Connected' : 'Not Connected'}`);
-
 ipcMain.on(
-	'SURVEY'
-,	async ( ev, ..._ ) => {
+	'DEPLOY'
+,	async ( ev, name, source, ..._ ) => {
 
-console.log( 'SURVEY START' )
-		const source = fs.readFileSync('./SimpleStorage.sol', 'utf8');
-		const solc = require('solc');
-		// Solidityコンパイラの入力形式
-		const input = {
+		const
+		input = {
 			language: 'Solidity',
 			sources: {
-				'SimpleStorage.sol': {
+				name + '.sol': {
 					content: source,
 				},
 			},
 			settings: {
 				outputSelection: {
 					'*': {
-						'*': ['abi', 'evm.bytecode'],
+						'*': [ 'abi', 'evm.bytecode' ],
 					},
 				},
 			},
 		};
 
 		// コンパイル
-		const output	= JSON.parse( solc.compile( JSON.stringify( input ) ) )
+		const output	= JSON.parse( require( 'solc' ).compile( JSON.stringify( input ) ) )
 		const abi		= output.contracts[ 'SimpleStorage.sol' ].SimpleStorage.abi
 		const bytecode	= output.contracts[ 'SimpleStorage.sol' ].SimpleStorage.evm.bytecode.object
 console.log( 'COMPILED' )
